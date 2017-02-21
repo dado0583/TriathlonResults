@@ -1,0 +1,50 @@
+{
+  "header": {
+    "__comments" : "Name ID can just be name for now",
+    "ID": "<UUID>",
+    "last_update_timestamp": "<TimeStamp>"
+  },
+    "name" : "<ID> from people.json",
+    "test-results" : [{
+      "name" : "2 mile",
+      "type" : "run",
+      "asOf" : "2017-01-06",
+      "overallResult" : "11m26s",
+      "splits" : [{
+          "unit" : "1 mile",
+          "result" : "5m36s"
+        }, {
+          "unit" : "2 mile",
+          "result" : "5m40s"
+        }]
+    }, {
+      "name" : "200 yd TT",
+      "type" : "swim",
+      "asOf" : "2017-01-06",
+      "overallResult" : "2:30",
+      "splits" : [{
+          "unit" : "100 yd",
+          "result" : "1m16s"
+        }, {
+          "unit" : "200 yd",
+          "result" : "1m14s"
+        }]
+    }], 
+    "race-results" : [{
+      "name" : "SoBe Triathlon (Classic)",
+      "type" : "triathlon - custom distance",
+      "asOf" : "2017-04-02",
+      "overallResult" : "2h11m26s",
+      "splits" : [{
+          "unit" : "swim",
+          "result" : "30m0s"
+        }, {
+          "unit" : "bike",
+          "result" : "1h10m0s"
+        }, {
+          "unit" : "run",
+          "result" : "31m26s"
+        }]
+    }]
+}
+
