@@ -1,0 +1,21 @@
+{
+  "header": {
+    "__comments" : "Name ID can just be name for now",
+    "ID": "daviddoherty",
+    "last_update_timestamp": "<TimeStamp>"
+  },
+    "name" : [{
+      "name" : "David Doherty",
+      "asOf" : "1983-May-10"
+    }],
+    "weight" : [{
+      "__comments": "Weights stored in kg",
+      "weight" : "61.2",
+      "asOf" : "2016-01-01"
+    },{
+      "__comments": "Weights stored in kg",
+      "weight" : "63.2",
+      "asOf" : "2017-01-01"
+    }],
+    "homeLocation" : "NYC"
+}
