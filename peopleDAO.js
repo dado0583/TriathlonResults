@@ -50,12 +50,24 @@ var validatePerson = function(json) {
 	}
 }
 
+
+var getIdFromName = function(name) {
+	return name.toLowerCase().replace(/ /g, "");
+}
+
+
 /**
 If the person doesn't already exist in the file then they are added,
 otherwise they are replaced.
 **/
 var replacePerson = function(json, peopleJson) {
 	var people = peopleJson.names;
+
+	if (json.hasOwnProperty('name') && !json.hasOwnProperty('id')) {
+		console.log('Seeting ID to: '+ getIdFromName(json["name"]));
+		json["id"] = getIdFromName(json["name"]);
+
+	}
 
 	for(var i = 0; i<people.length; i++) {
 		var person = people[i];
@@ -88,7 +100,7 @@ var getPeople = function (callback) {
 
 module.exports = {
     getPeople: getPeople,
-    addPerson: function(json) {
+    addPerson: function(json, callback) {
     	console.log(JSON.stringify(json));
 
     	if (validatePerson(json)) {
@@ -96,8 +108,10 @@ module.exports = {
 
 	    	//people.push(json);
 	    	setPeople(people);
+    		callback({"result": 1, "message": "Complete"});
     	} else {
-    		console.log('Person is not valid. '+ JSON.stringify(json));
+    		//console.log('Person is not valid. '+ JSON.stringify(json));
+    		callback({"result": -1, "message": 'Person is not valid. '+ JSON.stringify(json)});
     	}
     },
     getNames: function (callback) {
@@ -105,7 +119,7 @@ module.exports = {
 	    	var names = [];
 
 	    	for (var i=0; i<json.names.length; i++) {
-  				names.push(json.names[i].name);
+  				names.push({"id":json.names[i].id, "name":json.names[i].name});
 			}
 
 			callback(names)
