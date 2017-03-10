@@ -105,6 +105,15 @@ var scriptName = path.basename(__filename);
 
 console.log('Initiatlising '+ scriptName);
 
+
+/**
+If the person doesn't already exist in the file then they are added,
+otherwise they are replaced.
+**/
+var addResult = function(json, resultsJson) {
+	var people = resultsJson.names;
+}
+
 var validateResult = function(json) {
 	return new Promise(function(fulfill, reject) {
 		if (json.hasOwnProperty('nameId')) {
