@@ -1,10 +1,6 @@
 {
-  "header": {
-    "__comments" : "Name ID can just be name for now",
-    "ID": "<UUID>",
-    "last_update_timestamp": "<TimeStamp>"
-  },
-    "name" : "<ID> from people.json",
+    "last_update_timestamp": "<TimeStamp>",
+    "nameId" : "<ID> from people.json",
     "test-results" : [{
       "name" : "2 mile",
       "type" : "run",
