@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var peopleDAO = require('./peopleDAO.js');
-var resultsDAO = require('./resultsDAO.2.js');
+var resultsDAO = require('./resultsDAO.1.js');
 var HttpStatus = require('http-status-codes');
 //var _ = require('underscore');
 
@@ -59,7 +59,10 @@ app.get('/results/:id', function(req, res) {
 });
 
 app.post('/results', function(req, res) {
-	resultsDAO.addResult(req.body).then(function(result) {
+	resultsDAO.addResult(req.body).then(function() {
+
+		result = {"result": 1};
+		
 		if(result.result === -1) {
 			res.status(HttpStatus.BAD_REQUEST).send(result);
 		} else {

@@ -11,37 +11,34 @@ var options = {
     json: true
 };
 
-var called = 0;
+var get = function() {
+	options.method = 'GET';
+	options.json = true;
+
+	return rp(options);
+}
+
+var save = function(results) {
+	options.method = 'PUT';
+	options.json = results;
+	console.log('Saving');
+	return rp(options);
+}
 
 module.exports = {
-    //getResults: getResults,
-    addResult: function(json, callback) {
-		validateResult(json, function() {
-			options.method = 'GET';
-			options.json = undefined;
+    getResults: get,
+    addResult: function(json) {
+		return validateResult(json).then(get).then(function(results) {
+			//var results = JSON.parse(body);
 
-			request(options, function (error, response, body) {
-				if (!error && response.statusCode === 200) {
-					console.log('Retrieved results.json from '+ options.url);
-					
-					var results = JSON.parse(body);
-
-					for(let i=0; i<results.length;i++) {
-						if(results[i].name === json.nameId) {
-							results[i]['test-results'].push(json['test-result']);
-						}
-
-					}
-					
-					console.log('####AFTER############');
-					console.log(JSON.stringify(results, null, 4));
-				} else {
-					console.log(error);
-					reject(error);
+			for(let i=0; i<results.length;i++) {
+				if(results[i].name === json.nameId) {
+					results[i]['test-results'].push(json['test-result']);
 				}
-			}) 
-		}, undefined);
-		
+			}
+			console.log(JSON.stringify(results, null, 4));
+			return save(results);
+		});
     }
 }
 
@@ -50,28 +47,30 @@ var scriptName = path.basename(__filename);
 
 console.log('Initiatlising '+ scriptName);
 
-var validateResult = function(json, fulfill, reject) {
-	if (json.hasOwnProperty('nameId')) {
-		peopleDAO.getNames(function(names) {
-			let matchFound = false;
+var validateResult = function(json) {
+	return new Promise(function(resolve,reject){
+		if (json.hasOwnProperty('nameId')) {
+			peopleDAO.getNames(function(names) {
+				let matchFound = false;
 
-			for(let i = 0; i<names.length; i++) {
-				if (json.nameId === names[i].id) {
-					//console.log('Match found');
-					matchFound = true;
-					fulfill(json);
-				} 
-			}
+				for(let i = 0; i<names.length; i++) {
+					if (json.nameId === names[i].id) {
+						//console.log('Match found');
+						matchFound = true;
+						resolve(json);
+					} 
+				}
 
-			if(!matchFound) {
-				console.log(json.nameId +' doesnt exist as a person. Please add them first');
-				reject(json);
-			}
-		});
-	} else {
-		console.log('"nameId" is a required field and should match the id in the person record');
-		reject();
-	}
+				if(!matchFound) {
+					console.log(json.nameId +' doesnt exist as a person. Please add them first');
+					reject(json);
+				}
+			});
+		} else {
+			console.log('"nameId" is a required field and should match the id in the person record');
+			reject();
+		}
+	});
 }
 
 
