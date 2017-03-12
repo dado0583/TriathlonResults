@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var peopleDAO = require('./peopleDAO.js');
-var resultsDAO = require('./resultsDAO.js');
+var resultsDAO = require('./resultsDAO.2.js');
 var HttpStatus = require('http-status-codes');
 //var _ = require('underscore');
 
@@ -20,7 +20,6 @@ app.get('/', function(req, res) {
 });
 
 /**** PEOPLE REST URLS ****/
-
 app.get('/people', function(req, res) {
 	peopleDAO.getPeople(function(people){
 		res.json(people);
@@ -48,9 +47,9 @@ app.post('/people', function(req, res) {
 
 /**** RESULTS REST URLS ****/
 app.get('/results', function(req, res) {
-	resultsDAO.getResults(function(results){
+	resultsDAO.getResults().then(function(results){
 		res.json(results);
-	});
+	}, undefined);
 });
 
 app.get('/results/:id', function(req, res) {
@@ -60,7 +59,7 @@ app.get('/results/:id', function(req, res) {
 });
 
 app.post('/results', function(req, res) {
-	resultsDAO.addResult(req.body, function(result) {
+	resultsDAO.addResult(req.body).then(function(result) {
 		if(result.result === -1) {
 			res.status(HttpStatus.BAD_REQUEST).send(result);
 		} else {
