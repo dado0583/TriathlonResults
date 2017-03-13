@@ -52,17 +52,24 @@ app.get('/results', function(req, res) {
 	}, undefined);
 });
 
-app.get('/results/:id', function(req, res) {
-	/*resultsDAO.getNames(function(names){
-		res.json(['David', 'Cesar', 'etc']);
-	});*/
+app.get('/results/:nameId', function(req, res) {
+	console.log(req.query.nameId);
+
+	resultsDAO.getResults().then(function(results){
+
+		for(let i=0; i<results.length;i++) {
+			if(results[i].name === req.query.nameId) {
+				res.json(results[i]);
+			}
+		}
+	}, undefined);
 });
 
 app.post('/results', function(req, res) {
 	resultsDAO.addResult(req.body).then(function() {
 
 		result = {"result": 1};
-		
+
 		if(result.result === -1) {
 			res.status(HttpStatus.BAD_REQUEST).send(result);
 		} else {
