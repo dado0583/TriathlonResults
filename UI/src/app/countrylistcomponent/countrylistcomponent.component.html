@@ -1,0 +1,28 @@
+<select [(ngModel)]="selectedCountry.id">
+  <option *ngFor="let country of countries" value= {{country.id}}>{{country.name}}</option>
+</select>
+
+<ng2-dropdown>
+    <ng2-dropdown-button >
+        Open Menu
+    </ng2-dropdown-button>
+    <ng2-dropdown-menu>
+        <ng2-menu-item *ngFor="let country of countries">
+            {{ country.name }}
+        </ng2-menu-item>
+ 
+
+        <ng2-menu-item>
+            With Divider
+        </ng2-menu-item>
+        <ng2-menu-item>
+            With Divider
+        </ng2-menu-item>
+
+        <div class='ng2-menu-divider'></div>
+ 
+        <ng2-menu-item>
+            With Divider
+        </ng2-menu-item>
+    </ng2-dropdown-menu>
+</ng2-dropdown>
