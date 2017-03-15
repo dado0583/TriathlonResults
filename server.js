@@ -79,6 +79,15 @@ app.post('/results', function(req, res) {
 	});
 });
 
+app.get('/tests', function(req, res) {
+	res.json([
+		'Swim: 200yd', 
+		'Swim: 500yd', 
+		'Bike: FTP Test', 
+		'Run: 2 mile', 
+		'Run: 3 mile'
+	]);
+});
 
 app.listen(PORT, function() {
 	console.log('Express server started on port '+ PORT +'!');

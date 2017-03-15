@@ -2,7 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { Http } from "@angular/http";
 import { Jsonp } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+//import { Observable } from "rxjs/Observable";
+import {Observable} from 'rxjs/Rx';
 import { Inject} from "@angular/core";
 
 @Component({
@@ -14,7 +15,8 @@ import { Inject} from "@angular/core";
       <td>Athlete:</td>
       <td>
         <ng2-completer [(ngModel)]="record.athlete" 
-            [datasource]="athletes" [minSearchLength]="0"></ng2-completer>
+            [dataService]="dataService" 
+            [minSearchLength]="0"></ng2-completer>
       </td>
     </tr>
     <tr>
@@ -32,22 +34,18 @@ import { Inject} from "@angular/core";
       </td>
     </tr>
    </table>
-
-    <!--<input currencyMask [(ngModel)]="value" />
-
-    <input [mask]="'cep'" type="text" formControlName="zipCode">
-
-    <span>{{value}}</span>-->
      `
 })
 
-
-
-
 export class CompeterComponent  {
   
-  protected athletes = ["David Doherty", "Cesar De Villalba"]
-  protected resultTypes = ["Swim: 200yd", "Swim: 500yd", "Bike: FTP Test", "Run: 2 mile"]
+  //protected athletes = ["Loading..."]
+  protected athletes = [
+    {"id":"daviddoherty","name":"John D Smith"},
+    {"id":"cesardevillalba","name":"Sergio Gonzalez"}
+  ];
+
+  protected resultTypes = ["Loading..."]
  
   protected value;
 
@@ -61,18 +59,38 @@ export class CompeterComponent  {
     }
   };
 
-  constructor(@Inject(Http) private http: Http) {
-    this.athletes = ["David Doherty", "Cesar De Villalba", "Erika Sampaio"];
 
+  private dataService: CompleterData;
+
+  constructor(@Inject(Http) private http: Http,
+    private completerService: CompleterService) {
+
+    var scope = this;
+
+    let timedRes = Observable.from([scope.athletes]).delay(100);
+    this.dataService = completerService.local(timedRes, 'name', 'name');
+
+    console.log('Constructor');
 
     http.get("http://localhost:3000/people/names")
         .map(res => res.json())
-        .subscribe(data => this.athletes = data);
+        .subscribe(
+          function(something) {
+            console.log(JSON.stringify(something));
+            
+            for(let i=0; i<something.length; i++) {
+            
+            scope.athletes.push(something[i]);
 
-    http.get("http://localhost:3000/people/names")
+            }
+          });
+
+   /* http.get("http://localhost:3000/tests")
         .map(res => res.json())
-        .subscribe(data => console.log(data));
-    //this.dataService = completerService.local(this.searchData, 'color', 'color');
+        .subscribe(
+          function(something) {
+            console.log(something);
+            scope.resultTypes = something;
+          });*/
   }
-
 }

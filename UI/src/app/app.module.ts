@@ -29,8 +29,6 @@ import { LifecycleComponent } from './lifecycle.component';
     FormsModule,
     HttpModule,
     Ng2DropdownModule
-    /*,
-    Ng2InputMaskModule*/
   ],
   providers: [],
   bootstrap: [AppComponent]
