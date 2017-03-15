@@ -16,7 +16,8 @@ import { Inject} from "@angular/core";
       <td>
         <ng2-completer [(ngModel)]="record.athlete" 
             [dataService]="dataService" 
-            [minSearchLength]="0"></ng2-completer>
+            [minSearchLength]="0"
+            hiddenvalue="record.athleteid" ></ng2-completer>
       </td>
     </tr>
     <tr>
@@ -51,6 +52,7 @@ export class CompeterComponent  {
 
   protected record = {
     athlete:undefined,
+    athleteid:undefined,
     resultType: undefined,
     overallResult: undefined,
     splits:{
@@ -68,7 +70,7 @@ export class CompeterComponent  {
     var scope = this;
 
     let timedRes = Observable.from([scope.athletes]).delay(100);
-    this.dataService = completerService.local(timedRes, 'name', 'name');
+    this.dataService = completerService.local(timedRes, 'id', 'name');
 
     console.log('Constructor');
 
