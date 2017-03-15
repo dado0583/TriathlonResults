@@ -74,17 +74,17 @@ export class CompeterComponent  {
 
     console.log('Constructor');
 
-    http.get("http://localhost:3000/people/names")
+    http.get("http://127.0.0.1:3000/people/names")
         .map(res => res.json())
         .subscribe(
           function(something) {
-            console.log(JSON.stringify(something));
+            scope.athletes = something;
+           console.log(JSON.stringify(something));
             
             for(let i=0; i<something.length; i++) {
-            
             scope.athletes.push(something[i]);
-
-            }
+              
+           }
           });
 
    /* http.get("http://localhost:3000/tests")

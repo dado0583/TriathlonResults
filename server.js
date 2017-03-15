@@ -11,6 +11,11 @@ var PORT = 3000;
 
 app.use(bodyParser.json());
 //app.use(middleware.requireAuthentication);
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 console.log('Running in unsafe mode (process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";)');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
