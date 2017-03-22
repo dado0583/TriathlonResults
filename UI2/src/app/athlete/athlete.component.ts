@@ -1,31 +1,24 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
-import { Http } from "@angular/http";
-import { Jsonp } from "@angular/http";
+import { Http, Jsonp } from "@angular/http";
+import { NgForm, FormControl } from "@angular/forms";
 import {Observable} from 'rxjs/Rx';
 import { Inject} from "@angular/core";
 
 @Component({
   selector: 'athlete',
-  template: `
-    <p>
-        <ng2-completer
-            [dataService]="dataService" 
-            (selected)="onSelected($event)"
-            [minSearchLength]="0" ></ng2-completer>
-    </p>
-  `,
-  styles: []
+  templateUrl: 'athlete.html'
 })
+
 export class AthleteComponent implements OnInit {
   protected athletes = [
     {"id":undefined,"name":"Loading Athletes... Please wait a second"}
   ];
 
-  
   protected record = {
     athlete:undefined,
     athleteid:undefined,
+    athlete_freetext:undefined,
     resultType: undefined,
     overallResult: undefined,
     splits:{
@@ -55,18 +48,29 @@ export class AthleteComponent implements OnInit {
             scope.athletes.push(something[i]);
               
            }
-          });
+        });
   }
 
   ngOnInit() {
   }
 
   onSelected($event) {
-    if($event !== undefined) {
-      this.record.athleteid = $event.originalObject.id;
-      this.record.athlete = $event.originalObject.name;
+    if($event !== undefined && $event != null && $event.originalObject !== undefined)  {
+        this.record.athleteid = $event.originalObject.id;
+        this.record.athlete = $event.originalObject.name;
     } else {
-      console.log($event);
+        this.record.athlete = undefined;
+        this.record.athleteid = undefined;
     }
   }
+
+onKeyup($event) {
+    if($event !== undefined) {
+      this.record.athlete_freetext = $event.srcElement.value;
+    }
+}
+
+onSubmit(form: NgForm) {
+    console.log(form.value);
+}
 }
