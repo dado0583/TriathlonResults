@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
 import { Http } from "@angular/http";
 import { Jsonp } from "@angular/http";
-//import { Observable } from "rxjs/Observable";
 import {Observable} from 'rxjs/Rx';
 import { Inject} from "@angular/core";
 
