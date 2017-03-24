@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompleterService, CompleterData } from 'ng2-completer';
-import { Http, Jsonp } from "@angular/http";
+import { Http, Jsonp, RequestOptions, Headers, RequestOptionsArgs } from "@angular/http";
 import { NgForm, FormControl } from "@angular/forms";
 import {Observable} from 'rxjs/Rx';
 import { Inject} from "@angular/core";
@@ -31,7 +31,8 @@ export class AthleteComponent implements OnInit {
 
   constructor(@Inject(Http) private http: Http,
     private completerService: CompleterService) {
-
+    
+    this.http = http;
     var scope = this;
 
     let timedRes = Observable.from([scope.athletes]).delay(100);
@@ -71,6 +72,26 @@ onKeyup($event) {
 }
 
 onSubmit(form: NgForm) {
-    console.log(form.value);
+  if(this.record.athleteid == null) {
+    if(confirm('This will create a new athlete. Are you sure?')) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions(headers);
+
+        //Separate out to another service
+        let url = "http://127.0.0.1:3000/people";
+        this.http.post(url, { name : "David", id: "david"}, options)
+                        .map(data => console.log(data))
+                        .subscribe(
+                                comments => {
+                                    console.log(comments);
+                                }, 
+                                err => {
+                                    console.log(err);
+                                });
+        console.log('Create a user');
+    }
+  } else {
+    console.log('Adding results');
+  }
 }
 }
