@@ -30,7 +30,7 @@ var setPeople = function(json) {
 
 	request(options, function (error, response, body) {
 	    if (!error && response.statusCode === 200) {
-	    	console.log('Uploadeed people.json from '+ options.url); 
+	    	console.log('Uploaded people.json from '+ options.url); 
 	    } else {
 	        console.log(error);
 	    	callback('Error: '+ error);
@@ -39,10 +39,10 @@ var setPeople = function(json) {
 }
 
 var validatePerson = function(json) {
-	console.log(json);
+	//console.log(json);
 
 	if (json.hasOwnProperty('name')) {
-		console.log(json['name']);
+		//console.log(json['name']);
 		return true;
 	} else {
 		console.log('"name" is a required field');
@@ -64,7 +64,7 @@ var replacePerson = function(json, peopleJson) {
 	var people = peopleJson.names;
 
 	if (json.hasOwnProperty('name') && !json.hasOwnProperty('id')) {
-		console.log('Seeting ID to: '+ getIdFromName(json["name"]));
+		console.log('Setting ID to: '+ getIdFromName(json["name"]));
 		json["id"] = getIdFromName(json["name"]);
 
 	}

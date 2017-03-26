@@ -15,6 +15,14 @@ export class AthleteComponent implements OnInit {
     {"id":undefined,"name":"Loading Athletes... Please wait a second"}
   ];
 
+
+ /* public myModel = '';
+  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];*/
+
+
+  protected testTypes = ['Loading test types'];
+  names: string[] = ["John", "Paul", "George", "Ringo"]
+
   protected record = {
     athlete:undefined,
     athleteid:undefined,
@@ -44,11 +52,24 @@ export class AthleteComponent implements OnInit {
           function(something) {
             //scope.athletes = something;
            console.log(JSON.stringify(something));
-            
+            scope.athletes.pop();//Clearing the array of the loading message
+
             for(let i=0; i<something.length; i++) {
-            scope.athletes.push(something[i]);
-              
+              scope.athletes.push(something[i]); 
            }
+        });
+
+    http.get("http://127.0.0.1:3000/tests")
+        .map(res => res.json())
+        .subscribe(
+          function(something) {
+            //scope.athletes = something;
+           console.log(JSON.stringify(something));
+            scope.testTypes.pop();//Clearing the array of the loading message
+
+            for(let i=0; i<something.length; i++) {
+              scope.testTypes.push(something[i]);
+            }
         });
   }
 
@@ -71,6 +92,19 @@ onKeyup($event) {
     }
 }
 
+getPerson() {
+   let person = {}
+   if (this.record.athleteid !== undefined) {
+     person['name'] = this.record.athlete; 
+     person['id'] = this.record.athleteid;
+   } else {
+     person['name'] = this.record.athlete_freetext; 
+     person['id'] = this.record.athlete_freetext.toLowerCase().replace(/\s+/g, '');
+   }
+
+   return person;
+}
+
 onSubmit(form: NgForm) {
   if(this.record.athleteid == null) {
     if(confirm('This will create a new athlete. Are you sure?')) {
@@ -79,7 +113,7 @@ onSubmit(form: NgForm) {
 
         //Separate out to another service
         let url = "http://127.0.0.1:3000/people";
-        this.http.post(url, { name : "David", id: "david"}, options)
+        this.http.post(url, this.getPerson(), options)
                         .map(data => console.log(data))
                         .subscribe(
                                 comments => {
@@ -94,4 +128,5 @@ onSubmit(form: NgForm) {
     console.log('Adding results');
   }
 }
+
 }

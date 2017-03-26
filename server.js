@@ -38,7 +38,7 @@ app.get('/people/names', function(req, res) {
 });
 
 app.post('/people', function(req, res) {
-	console.log(typeof res);
+	console.log(JSON.stringify(req.body));
 
 	peopleDAO.addPerson(req.body, (result) => {
 		if(result.result === -1) {

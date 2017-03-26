@@ -6,6 +6,9 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AthleteComponent } from './athlete/athlete.component';
 import {Ng2CompleterModule} from 'ng2-completer'
+import {DropdownModule, Dropdown, DropdownNotClosableZone, DropdownOpen} from "ngx-dropdown";
+
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,9 @@ import {Ng2CompleterModule} from 'ng2-completer'
     BrowserModule,
     FormsModule,
     Ng2CompleterModule,
-    HttpModule
+    HttpModule,
+    DropdownModule,
+    TextMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

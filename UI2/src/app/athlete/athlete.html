@@ -7,5 +7,11 @@
       [minSearchLength]="0"
         name="username"
         required></ng2-completer>
+
+      <select [(ngModel)]="record.resultType" name="Select test type" > 
+        <option *ngFor="let n of testTypes" [attr.value]="n">{{n}}</option>
+      </select>
+
+   <!-- <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>-->
   <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
 </form>
