@@ -16,9 +16,8 @@ export class AthleteComponent implements OnInit {
   ];
 
 
- /* public myModel = '';
-  public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];*/
-
+  //public myModel = '';
+  //public mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
   protected testTypes = ['Loading test types'];
   names: string[] = ["John", "Paul", "George", "Ringo"]
@@ -74,6 +73,7 @@ export class AthleteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectMask();
   }
 
   onSelected($event) {
@@ -129,4 +129,61 @@ onSubmit(form: NgForm) {
   }
 }
 
+private selectedMask = "swim";
+private selectedMaskFormat = [];
+
+  selectMask() {
+    switch(this.selectedMask) {
+      case "swim":
+        this.selectedMaskFormat = this.Masks.SWIM;
+        break;
+      case "swimLong":
+        this.selectedMaskFormat = this.Masks.SWIM_LONG;
+        break;
+      case "run":
+        this.selectedMaskFormat = this.Masks.RUN_SHORT;
+        break;
+      case "runLong":
+        this.selectedMaskFormat = this.Masks.RUN_LONG;
+        break;
+      case "bike":
+        this.selectedMaskFormat = this.Masks.BIKE_POWER;
+        break;
+      case "bikeHeartRate":
+        this.selectedMaskFormat = this.Masks.BIKE_BPM;
+        break;
+    }
+
+    //console.log(this.overallResult);
+  }
+
+  private Masks = {
+    SWIM : [/[1-9]/, /\d/, 'm', ' ', /\d/,  /\d/, 's'],
+    SWIM_LONG : [/[1-9]/, 'h', /[1-9]/, /\d/, 'm', ' ', /\d/,  /\d/, 's'],
+    RUN_LONG : [/[1-9]/, 'h', /[1-9]/, /\d/, 'm', ' ', /\d/,  /\d/, 's'],
+    RUN_SHORT : [/[1-9]/, /\d/, 'm', ' ', /\d/,  /\d/, 's'],
+    BIKE_POWER : [/\d/, /\d/,  /\d/, ' watts'],
+    BIKE_BPM : [/\d/, /\d/,  /\d/, ' bpm']
+  }
+
+  onChange() {
+    //console.log(JSON.stringify(this));
+  }
+
+  onResultTypeChange() {
+    console.log(this.record.resultType);
+
+    let str = this.record.resultType.toLowerCase();
+
+    if(str.indexOf('swim') > 0) {
+      this.selectedMask = "swim";
+    } else if(str.indexOf('run') > 0) {
+      this.selectedMask = "run";
+    } else if(str.indexOf('ftp') > 0) {
+      this.selectedMask = "bike";
+    }
+
+    this.record.overallResult = "";
+    this.selectMask();
+  }
 }

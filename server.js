@@ -32,6 +32,9 @@ app.get('/people', function(req, res) {
 });
 
 app.get('/people/names', function(req, res) {
+
+	//res.json({"name":"david", "id":"david"});
+
 	peopleDAO.getNames(function(names){
 		res.json(names);
 	});

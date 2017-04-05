@@ -1,17 +1,25 @@
 
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" >
   <ng2-completer
       [dataService]="dataService" 
       (selected)="onSelected($event)"
       (keyup)="onKeyup($event)"
       [minSearchLength]="0"
-        name="username"
+        name="username" id="username"
         required></ng2-completer>
 
-      <select [(ngModel)]="record.resultType" name="Select test type" > 
+      <select [(ngModel)]="record.resultType" name="testType" id="testType" (change)="onResultTypeChange()"> 
         <option *ngFor="let n of testTypes" [attr.value]="n">{{n}}</option>
       </select>
 
-   <!-- <input [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text"/>-->
+<br>
+
+      <input [textMask]="{mask:selectedMaskFormat}" [(ngModel)]="record.overallResult" guide="true" type="text" (change)="onChange()" name="overallResult" id="overallResult">
+  
+
+     <!--<input name"fullResult" [textMask]="{mask: mask}" [(ngModel)]="myModel" type="text" />-->
+    <!-- Alternative: https://plnkr.co/edit/oali7nSuuV8If06NvyGF?p=preview -->
   <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Submit</button>
 </form>
+
+{{ record | json }}

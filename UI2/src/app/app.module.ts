@@ -9,11 +9,13 @@ import {Ng2CompleterModule} from 'ng2-completer'
 import {DropdownModule, Dropdown, DropdownNotClosableZone, DropdownOpen} from "ngx-dropdown";
 
 import { TextMaskModule } from 'angular2-text-mask';
+import { TextMaskComponent } from './text-mask/text-mask.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AthleteComponent
+    AthleteComponent,
+    TextMaskComponent
   ],
   imports: [
     BrowserModule,
